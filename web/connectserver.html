@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control del Servidor</title>
+    <link rel="stylesheet" href="./style/global.css">
+        <style>
+        </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Inicio</a></li>
+            <li><a href="./connectserver.html">Administración Server</a></li>
+        </ul>
+    </nav>    
+
+    <div class="container">
+        <h1>Control del Servidor</h1>
+        <button onclick="sendCommand('start')">Encender</button>
+        <button onclick="sendCommand('restart')">Reiniciar</button>
+        <button onclick="sendCommand('shutdown')">Apagar</button>
+        <button onclick="sendCommand('modify')">Modificar Archivos</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
