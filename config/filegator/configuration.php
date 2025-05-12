@@ -104,7 +104,7 @@ return [
             'config' => [],
         ],
         'Filegator\Services\Auth\AuthInterface' => [
-            'handler' => '\Filegator\Services\Auth\Adapters\Database', 
+            'handler' => '\Filegator\Services\Auth\Adapters\Database',
             'config' => [
                 'db_driver' => 'mysql', // O 'mariadb' si FileGator lo diferencia
                 'db_host' => 'localhost', // Tu host de base de datos
