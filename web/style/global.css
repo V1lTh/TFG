@@ -1,0 +1,104 @@
+.navbar {
+  background: #333;
+  padding: 0.5em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  transition: background 0.3s;
+}
+
+.navbar a:hover {
+  background: #555;
+  border-radius: 5px;
+}
+
+/* style.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1c1c1c, #444);
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.container {
+  text-align: center;
+}
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+a.button, button {
+  display: inline-block;
+  padding: 15px 30px;
+  background: #00d1b2;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 30px;
+  box-shadow: 0 0 10px #00d1b2;
+  transition: 0.3s;
+}
+a.button:hover, button:hover {
+  background: #00b89c;
+  box-shadow: 0 0 20px #00d1b2;
+}
+input {
+  width: 100%;
+  margin: 0.5em 0;
+  padding: 0.7em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.msg {
+  margin-top: 1em;
+  text-align: center;
+}
+.navbar {
+  background: #333;
+  padding: 0.5em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+.navbar ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 1em;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  font-weight: bold;
+}
+.navbar a:hover {
+  background: #555;
+  border-radius: 5px;
+}

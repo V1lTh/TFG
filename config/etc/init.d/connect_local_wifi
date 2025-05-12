@@ -1,0 +1,38 @@
+#!/sbin/openrc-run
+
+name="connect_local_wifi"
+description="Connects to the local WiFi network at boot"
+
+# Define el comando a ejecutar (nuestro script bash)
+command="/usr/local/bin/connect_local_wifi.sh"
+
+# Define las dependencias: necesita que la red esté lista (aunque a veces wpa_supplicant arranca antes)
+# y posiblemente sysinit para tareas tempranas.
+# Puede que necesites ajustar las dependencias según tu sistema.
+depend() {
+    need net
+    # use dns
+    # use logger # si quieres asegurarte de que el servicio de logger esté listo antes
+}
+
+# La función start() es la que OpenRC ejecuta al inicio
+start() {
+    ebegin "Starting $name"
+    # Ejecuta nuestro script bash en segundo plano
+    # start-stop-daemon es una herramienta común en OpenRC para gestionar procesos
+    start-stop-daemon --start --background --exec "$command"
+    eend $?
+}
+
+# La función stop() es para detener el servicio (opcional en este caso)
+# Detenerlo aquí implicaría matar el proceso wpa_supplicant asociado
+stop() {
+    ebegin "Stopping $name"
+    # Esto intentará matar el proceso wpa_supplicant iniciado por el script
+    pkill -f "wpa_supplicant -i ${IFACE:-wlan0}" || true # Usar IFACE por defecto si no está definido
+    # También podrías limpiar el archivo wpa_supplicant.conf si quieres
+    # rm /etc/wpa_supplicant-${IFACE:-wlan0}.conf || true
+    eend $?
+}
+
+# Opcional: Puedes añadir funciones status(), restart(), etc.

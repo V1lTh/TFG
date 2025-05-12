@@ -1,19 +1,256 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
-    <link rel="stylesheet" href="./style/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HOME</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --fg: #e0e0e0;
+      --fg-muted: #777;
+      --primary: #00d1b2;
+      --primary-dark: #00b89c;
+      --trans: .3s;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      color: var(--fg);
+      overflow: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Fondo animado mejorado */
+    .bg-animated {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
+      background: linear-gradient(-45deg, #0b0f14, #1a2634, #0b0f14);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Partículas CSS */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background-color: rgba(0, 209, 178, 0.3);
+      border-radius: 50%;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      to {
+        transform: translateY(-100vh);
+      }
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background: rgba(11,15,20,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 10;
+    }
+    .widgets {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .widget {
+      background: rgba(0,0,0,0.5);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      padding: 0 1rem;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      animation: slideIn 0.8s ease-out forwards;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .hero p {
+      margin-top: 0.5rem;
+      color: var(--fg-muted);
+      animation: fadeIn 1.2s ease-out;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      max-width: 600px;
+      min-height: 3.5em;
+      text-align: center;
+    }
+    .hero .btn {
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      background: var(--primary);
+      color: var(--bg);
+      font-weight: 600;
+      border-radius: 30px;
+      box-shadow: 0 0 12px rgba(0,209,178,0.5);
+      transition: var(--trans);
+      animation: pulse 2s infinite;
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero .btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 0 20px rgba(0,209,178,0.8);
+      animation: none;
+    }
+    .hero .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+      z-index: -1;
+      transition: opacity var(--trans);
+      opacity: 1;
+    }
+    .hero .btn:hover::before {
+      opacity: 0.9;
+    }
+
+    /* FOOTER */
+    footer {
+      position: absolute;
+      bottom: 1rem;
+      width: 100%;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+    @keyframes slideIn { from{transform:translateY(-30px);opacity:0} to{transform:translateY(0);opacity:1} }
+    @keyframes pulse   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+
+    /* Forced Colors Mode */
+    @media (forced-colors: active) {
+      :root {
+        --bg: #000;
+        --fg: #FFF;
+        --primary: #00FFFF;
+        --fg-muted: #CCC;
+      }
+      .particles {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="square">
-            <a href="page1.html" class="section top-left">SERVER</a>
-            <a href="page2.html" class="section top-right"></a>
-            <a href="page3.html" class="section bottom-left"></a>
-            <a href="page4.html" class="section bottom-right"></a>
-        </div>
-    </div>
+  <!-- Fondo animado -->
+  <div class="bg-animated"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Sección principal -->
+  <section class="hero">
+    <h1>Tu servidor personal en la palma de tu mano</h1>
+    <p id="typewriter-text"></p>
+    <a class="btn" href="/filegator/">Empezar Ahora</a>
+  </section>
+
+  <!-- Pie de página -->
+  <footer>
+    &copy; 2025 VY - Network Attach Storage Proyect • <a href="" style="color: var(--fg-muted);">Términos y Privacidad</a>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Crear partículas animadas
+    document.addEventListener('DOMContentLoaded', function() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = Math.floor(window.innerWidth / 8);
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+
+        // Tamaño y posición aleatoria
+        const size = Math.random() * 4 + 1;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.bottom = `-10px`;
+
+        // Animación con duración y retraso aleatorio
+        const duration = Math.random() * 20 + 10;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${Math.random() * 20}s`;
+
+        // Opacidad variable
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+
+        particlesContainer.appendChild(particle);
+      }
+
+      // Efecto typewriter
+      const text = "Gestiona archivos, servicios y monitoriza tu dispositivo al instante.";
+      const element = document.getElementById('typewriter-text');
+      let i = 0;
+      const speed = 30; // Velocidad en milisegundos
+
+      function typeWriter() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+        }
+      }
+
+      // Iniciar el efecto después de un pequeño retraso
+      setTimeout(typeWriter, 800);
+    });
+  </script>
 </body>
 </html>
