@@ -1,4 +1,4 @@
-# VY - Network Attach Storage Proyect 
+<a name="top"># VY - Network Attach Storage Proyect <a> 
 
 Este proyecto documenta el proceso de transformar un **Samsung Galaxy S8** en un **servidor web autónomo** y **sistema de gestión de archivos (similar a un NAS)** utilizando **Alpine Linux**. Una solución portátil y de bajo consumo para alojar sitios web y gestionar archivos de forma remota a través de una interfaz web, aprovechando la capacidad de procesamiento y almacenamiento de dispositivos moviles.
 
@@ -135,18 +135,13 @@ El dispositivo móvil tiene una batería, lo que añade una dimensión interesan
 ## Mejoras Futuras Potenciales
 
 * Implementar completamente la organización de archivos y límites de almacenamiento por usuario en FileGator.
-* Desarrollar un script de monitoreo de batería en segundo plano.
-* Explorar el control inteligente de carga si el hardware lo permite.
+* Desarrollar un script de monitoreo de batería en segundo plano y mostrarla como función en la web. 
 * Configurar otros protocolos de acceso a archivos (SFTP, WebDAV si no está integrado en FileGator, SMB con Samba si los recursos lo permiten).
 * Integrar soluciones de sincronización de archivos (ej. Syncthing) o backup.
 * Configurar un servicio de DNS dinámico (como DuckDNS) para acceso desde Internet.
 
 ## Contribuir
 
-Si deseas contribuir a este proyecto, siéntete libre de hacer un fork del repositorio, realizar mejoras y enviar Pull Requests.
-
 ## Licencia
-
-Este proyecto está bajo la licencia [Especificar Licencia, ej. MIT, GPL, etc.].
 
 ---
