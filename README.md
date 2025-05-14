@@ -1,41 +1,43 @@
-<a name="top"># VY - Network Attach Storage Proyect <a> 
+# <a name="top">VY - Network Attach Storage Proyect <a> 
 
 Este proyecto documenta el proceso de transformar un **Samsung Galaxy S8** en un **servidor web autónomo** y **sistema de gestión de archivos (similar a un NAS)** utilizando **Alpine Linux**. Una solución portátil y de bajo consumo para alojar sitios web y gestionar archivos de forma remota a través de una interfaz web, aprovechando la capacidad de procesamiento y almacenamiento de dispositivos moviles.
 
 ## Características Principales
 
-* **Servidor Web Funcional:** Alojamiento de sitios web y aplicaciones dinámicas (PHP).
-* **Base de Datos MariaDB:** Almacenamiento de datos estructurados para aplicaciones y la gestión de usuarios.
-* **Acceso Remoto Seguro:** Acceso vía SSH y configuración de DDNS para acceso desde Internet [VilyionNAS](http://vilyion.sytes.net/).
-* **Portabilidad:** Aprovecha el formato compacto y la capacidad de batería del dispositivo móvil.
-* **Base Minimalista (Alpine Linux):** Sistema operativo ligero y enfocado en la seguridad.
+* Servidor Web Funcional: Alojamiento de sitios web y aplicaciones dinámicas (PHP).
+* Base de Datos MariaDB: Almacenamiento de datos estructurados para aplicaciones y la gestión de usuarios.
+* Acceso Remoto Seguro: Acceso vía SSH y configuración de DDNS para acceso desde Internet [VilyionNAS](http://vilyion.sytes.net/).
+* Portabilidad: Aprovecha el formato compacto y la capacidad de batería del dispositivo móvil.
+* Base Minimalista (Alpine Linux): Sistema operativo ligero y enfocado en la seguridad.
 
 ## Tecnologías Utilizadas
 
-* **Samsung Galaxy S8:** El hardware base para nuestro servidor portátil.
-* **[PostmarketOS](https://postmarketos.org/):** Una imagen de kernel modificada para flashear Alpine Linux. 
-* **[Alpine Linux](https://www.alpinelinux.org/):** Una distribución Linux muy ligera y segura, ideal para sistemas empotrados que nos proporciona el entorno operativo.
-* **[lighttpd](https://www.lighttpd.net/):** Un servidor web rápido, ligero y de bajo consumo, adecuado para el hardware del dispositivo.
-* **PHP:** El lenguaje de programación del lado del servidor necesario para ejecutar aplicaciones dinámicas como FileGator.
-* **MariaDB:** Un popular sistema de gestión de bases de datos relacionales, usado para almacenar datos de aplicaciones y usuarios.
+### Fisico
+* **Samsung Galaxy S8 (dreamlte):** El hardware base para el servidor móvil.
+### Software a bajo nivel
+* **ODIN**: No hay sitio oficial para decargar, instalarlo por vuestro propio riesgo, una opción a tener en cuenta es la herramienta **heimdall** para entornos Linux. 
+* [TWRP](https://twrp.me/) Una imagen de recuperación personalizada de software de código abierto para dispositivos basados en Android.
+* [PostmarketOS](https://postmarketos.org/): Es un sistema operativo de software libre y de código abierto en desarrollo ante todo para teléfonos inteligentes y tabletas, basado en Alpine, una distribución de Linux muy ligera y segura, ideal para sistemas empotrados que nos proporciona el entorno operativo.
+### Software
+* [Lighttpd](https://www.lighttpd.net/): Un servidor web rápido, ligero y de bajo consumo, adecuado para el hardware del dispositivo.
+* [PHP](https://www.php.net/): El lenguaje de programación del lado del servidor necesario para ejecutar aplicaciones dinámicas como FileGator.
+* [MariaDB](https://mariadb.org/download/?t=mariadb&p=mariadb&r=11.7.2&os=windows&cpu=x86_64&pkg=msi&mirror=raiolanetworks): Un popular sistema de gestión de bases de datos relacionales, usado para almacenar datos de aplicaciones y usuarios.
 * **SSH:** Protocolo seguro para acceso remoto a la línea de comandos del dispositivo.
-* **/sys/class/power_supply/:** Interfaz del kernel Linux para acceder a información de la batería y fuentes de energía (para monitoreo avanzado).
 
 ## Proceso de Instalación y Configuración
 
-Aquí se detalla el camino seguido para configurar el Galaxy S8 como servidor VilyionNAS:
+### 1. Creación de la imagen personalizada utilizando PostmarketOS:
+### 2. Preparación del Dispositivo (Galaxy S8)
 
-### 1. Preparación del Dispositivo (Galaxy S8)
+Este paso implica reemplazar el sistema operativo Android por una distribución Linux.
 
-Este paso implica reemplazar el sistema operativo Android por una distribución Linux completa.
-
-1.  **Desbloquear el Bootloader:** Habilitar la opción "OEM Unlock" en las opciones de desarrollador del dispositivo. **Advertencia:** Esto anulará la garantía y borrará todos los datos del teléfono.
+1.  **Desbloquear el Bootloader:** Habilitar la opción "OEM Unlock" y "USB DEBUG" en las opciones de desarrollador del dispositivo. Esto anulará la garantía y borrará todos los datos del teléfono.
 2.  **Instalar un Recovery Personalizado (TWRP):** TWRP (Team Win Recovery Project) es un recovery alternativo que permite flashear imágenes de sistema no oficiales.
     * Descargar la imagen de TWRP compatible con tu modelo exacto de Galaxy S8.
-    * Flashear TWRP usando herramientas como Odin en Windows o `heimdall` en Linux.
+    * Flashear TWRP usando herramientas como Odin en Windows. 
 3.  **Flashear Alpine Linux:** Obtener una imagen de Alpine Linux compatible con la arquitectura ARM del Galaxy S8 y flashearla usando TWRP. El método exacto de flasheo puede variar según la imagen de Alpine utilizada.
-4.  **Primer Arranque en Alpine Linux:** El dispositivo arrancará en Alpine. Inicialmente, el acceso podría ser a través de ADB o Termux (si la imagen lo incluye) hasta configurar el acceso SSH.
-
+4.  **Primer Arranque en Alpine Linux:** El dispositivo arrancará en Alpine. Inicialmente, el acceso podría ser a través de ADB (Recomendado por PostmarketOS) hasta configurar el acceso SSH.
+ 
 ### 2. Configuración Inicial de Alpine Linux y Acceso Remoto
 
 Una vez en Alpine, se configuran los aspectos básicos del sistema.
