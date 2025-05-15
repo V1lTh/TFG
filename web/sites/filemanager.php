@@ -1,69 +1,62 @@
 <?php
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: auth.php");
+// filemanager.php
+require __DIR__.'/config.php';
+require __DIR__.'/utils.php';
+requireLogin();
+$usuario   = $_SESSION['username'];
+$dir       = userDir($usuario);
+if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_FILES['archivos']['name'])) {
+    $uploaded=[]; $errors=[];
+    foreach ($_FILES['archivos']['name'] as $i => $orig) {
+        $err = $_FILES['archivos']['error'][$i];
+        if ($err===UPLOAD_ERR_OK) {
+            $safe = sanitizeFilename($orig);
+            $dest = "$dir/$safe";
+            if (move_uploaded_file($_FILES['archivos']['tmp_name'][$i], $dest)) {
+                $uploaded[] = $safe;
+            } else {
+                $errors[] = "$orig: fallo al mover";
+            }
+        } else {
+            $errors[] = "$orig: error código $err";
+        }
+    }
+    if ($uploaded) flash('Subidos: '.implode(', ',$uploaded),'success');
+    if ($errors)   flash('Errores:<br>'.implode('<br>',$errors),'error');
+    header('Location: filemanager.php');
     exit;
 }
-$usuario = $_SESSION['username'];
-$directorio = "uploads/$usuario";
-
-if (!is_dir($directorio)) {
-    mkdir($directorio, 0775, true);
+if (isset($_GET['eliminar'])) {
+    $f = sanitizeFilename($_GET['eliminar']);
+    $p = "$dir/$f";
+    if (is_file($p)) unlink($p);
+    header('Location: filemanager.php');
+    exit;
 }
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["archivo"])) {
-    $nombreArchivo = basename($_FILES["archivo"]["name"]);
-    $destino = "$directorio/$nombreArchivo";
-    move_uploaded_file($_FILES["archivo"]["tmp_name"], $destino);
-}
-
-if (isset($_GET["eliminar"])) {
-    $archivo = basename($_GET["eliminar"]);
-    $ruta = "$directorio/$archivo";
-    if (file_exists($ruta)) unlink($ruta);
-}
-
-$archivos = scandir($directorio);
+$files = listUserFiles($dir);
+$pageTitle = 'Gestor de Archivos';
+require __DIR__.'/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestor de Archivos</title>
-    <style>
-        body { font-family: sans-serif; background: #f4f4f4; padding: 2em; }
-        .container { max-width: 700px; margin: auto; background: white; padding: 1em; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
-        th, td { border-bottom: 1px solid #ddd; padding: 0.5em; text-align: left; }
-        th { background: #eee; }
-        .actions a { margin-right: 10px; color: #007BFF; text-decoration: none; }
-        .actions a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Gestor de Archivos - <?= htmlspecialchars($usuario) ?></h2>
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="archivo" required>
-            <button type="submit">Subir</button>
-        </form>
-        <table>
-            <tr><th>Nombre</th><th>Tamaño</th><th>Acciones</th></tr>
-            <?php foreach ($archivos as $archivo):
-                if ($archivo == "." || $archivo == "..") continue;
-                $ruta = "$directorio/$archivo";
-                ?>
-                <tr>
-                    <td><?= htmlspecialchars($archivo) ?></td>
-                    <td><?= round(filesize($ruta) / 1024, 2) ?> KB</td>
-                    <td class="actions">
-                        <a href="<?= $ruta ?>" download>📥 Descargar</a>
-                        <a href="?eliminar=<?= urlencode($archivo) ?>" onclick="return confirm('¿Eliminar <?= htmlspecialchars($archivo) ?>?')">🗑 Eliminar</a>
-                    </td>
-                </tr>
-            <?php endforeach ?>
-        </table>
-    </div>
-</body>
-</html>
+<div class="container">
+  <h2>Gestor de <?= htmlspecialchars($usuario) ?></h2>
+  <form method="post" enctype="multipart/form-data">
+    <input type="file" name="archivos[]" multiple required>
+    <button type="submit">Subir</button>
+  </form>
+  <table>
+    <tr><th>Nombre</th><th>Tamaño</th><th>Acciones</th></tr>
+    <?php foreach($files as $f): ?>
+    <tr>
+      <td><?= htmlspecialchars($f) ?></td>
+      <td><?= round(filesize("$dir/$f")/1024,2) ?> KB</td>
+      <td>
+        <a href="<?= "$dir/$f" ?>" download>📥</a>
+        <a href="?eliminar=<?= urlencode($f) ?>" onclick="return confirm('Eliminar?')">🗑</a>
+      </td>
+    </tr>
+    <?php endforeach; if(empty($files)): ?>
+    <tr><td colspan="3" style="text-align:center;">Sin archivos</td></tr>
+    <?php endif; ?>
+  </table>
+</div>
+<?php require __DIR__.'/footer.php'; ?>
