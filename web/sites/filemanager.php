@@ -50,7 +50,7 @@ require __DIR__.'/header.php';
       <td><?= htmlspecialchars($f) ?></td>
       <td><?= round(filesize("$dir/$f")/1024,2) ?> KB</td>
       <td>
-        <a href="<?= "$dir/$f" ?>" download>📥</a>
+        <a href="<?= "$dir/$f" ?>"Download</a>
         <a href="?eliminar=<?= urlencode($f) ?>" onclick="return confirm('Eliminar?')">🗑</a>
       </td>
     </tr>
